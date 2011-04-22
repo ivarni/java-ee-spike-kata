@@ -23,7 +23,8 @@ public class CreatePersonView {
             .append("<form method='post' action='createPerson.html'>") //
             .append("<p>")
             .append("<label for='full_name'><b>Full name:</b></label>")
-            .append("<input type='text' name='full_name' value='" + htmlEscape(fullName) + "'/>") //
+            .append("<input type='text' name='first_name' value='" + htmlEscape(fullName) + "'/>") //
+            .append("<input type='text' name='last_name' value='" + htmlEscape(fullName) + "'/>") //
             .append("</p>")
             .append("<input type='submit' name='createPerson' value='Create person'/>") //
             .append("</form>");
@@ -45,9 +46,9 @@ public class CreatePersonView {
     static String validateName(String fullName) {
         String errorMessage = null;
         if (fullName.equals("")) {
-            errorMessage = "Full name must be given";
+            errorMessage = "First name must be given";
         } else if (CreatePersonView.containsIllegalCharacters(fullName)) {
-            errorMessage = "Full name contains illegal characters";
+            errorMessage = "First name contains illegal characters";
         }
         return errorMessage;
     }

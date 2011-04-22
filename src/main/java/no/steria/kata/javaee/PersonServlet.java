@@ -43,10 +43,10 @@ public class PersonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CreatePersonView createPersonView = new CreatePersonView();
-        createPersonView.setFullName(req.getParameter("full_name"));
+        createPersonView.setFullName(req.getParameter("first_name"));
 
         if (createPersonView.isValid()) {
-            personDao.createPerson(Person.withName(req.getParameter("full_name")));
+            personDao.createPerson(Person.withName(req.getParameter("first_name"), req.getParameter("last_name")));
             resp.sendRedirect("/");
         } else {
             resp.setContentType("text/html");
