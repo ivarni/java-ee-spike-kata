@@ -58,16 +58,29 @@ public class PersonServletTest {
     }
 
     @Test
-    public void shouldRejectFullNameWithHtmlCharacters() throws Exception {
+    public void shouldRejectFirstNameWithHtmlCharacters() throws Exception {
         when(req.getParameter("first_name")).thenReturn("<&>");
         assertValidationError("First name contains illegal characters")
             .contains("name='first_name' value='&lt;&amp;&gt;'");
     }
 
     @Test
-    public void shouldValidateNameIsGiven() throws Exception {
+    public void shouldRejectLastNameWithHtmlCharacters() throws Exception {
+        when(req.getParameter("last_name")).thenReturn("<&>");
+        assertValidationError("Last name contains illegal characters")
+        .contains("name='last_name' value='&lt;&amp;&gt;'");
+    }
+
+    @Test
+    public void shouldValidateFirstNameIsGiven() throws Exception {
         when(req.getParameter("first_name")).thenReturn("");
         assertValidationError("First name must be given");    
+    }
+
+    @Test
+    public void shouldValidateLastNameIsGiven() throws Exception {
+        when(req.getParameter("last_name")).thenReturn("");
+        assertValidationError("Last name must be given");    
     }
 
     private StringAssert assertValidationError(String expectedError) throws ServletException, IOException {

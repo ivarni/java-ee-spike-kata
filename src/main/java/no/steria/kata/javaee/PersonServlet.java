@@ -28,7 +28,7 @@ public class PersonServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CreatePersonView createPersonView = new CreatePersonView();
+        CreatePersonForm createPersonView = new CreatePersonForm();
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
         if (req.getPathInfo().equals("/findPeople.html")) {
@@ -36,21 +36,22 @@ public class PersonServlet extends HttpServlet {
             List<Person> people = personDao.findPeople(nameQuery);
             showSearchPage(writer, nameQuery, people);
         } else {
-            createPersonView.showCreatePage(writer);
+            createPersonView.showCreateForm(writer);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CreatePersonView createPersonView = new CreatePersonView();
-        createPersonView.setFullName(req.getParameter("first_name"));
+        CreatePersonForm personForm = new CreatePersonForm();
+        personForm.setFirstName(req.getParameter("first_name"));
+        personForm.setLastName(req.getParameter("last_name"));
 
-        if (createPersonView.isValid()) {
+        if (personForm.isValid()) {
             personDao.createPerson(Person.withName(req.getParameter("first_name"), req.getParameter("last_name")));
             resp.sendRedirect("/");
         } else {
             resp.setContentType("text/html");
-            createPersonView.showCreatePage(resp.getWriter());
+            personForm.showCreateForm(resp.getWriter());
         }
     }
 
