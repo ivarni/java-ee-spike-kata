@@ -46,7 +46,7 @@ public class CreatePersonForm {
         return fullName.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     }
 
-    static boolean containsIllegalCharacters(String fullName) {
+    private boolean containsIllegalCharacters(String fullName) {
         if (fullName == null) return false;
         String illegals = "<>&";
         for (char illegal : illegals.toCharArray()) {
@@ -55,11 +55,11 @@ public class CreatePersonForm {
         return false;
     }
 
-    static String validateName(String firstName, String nameString) {
+    private String validateName(String firstName, String nameString) {
         String errorMessage = null;
         if ("".equals(firstName)) {
             errorMessage = nameString +  " must be given";
-        } else if (CreatePersonForm.containsIllegalCharacters(firstName)) {
+        } else if (containsIllegalCharacters(firstName)) {
             errorMessage = nameString + " contains illegal characters";
         }
         return errorMessage;
